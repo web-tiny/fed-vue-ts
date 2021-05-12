@@ -1,6 +1,16 @@
+/*
+ * @Descripttion: tiny.jiao@aliyun.com
+ * @version:
+ * @Author: Tiny
+ * @Date: 2021-04-21 00:09:13
+ * @LastEditors: Tiny
+ * @LastEditTime: 2021-05-12 08:31:54
+ */
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import layout from '@/loyout/index.vue'
+// import store from '@/store/index'
+import { localStorageGet } from '@/utils/storage/index'
 
 Vue.use(VueRouter)
 
@@ -14,6 +24,9 @@ const routes: Array<RouteConfig> = [
     name: 'layout',
     path: '/',
     component: layout,
+    meta: {
+      requiresAuth: true
+    },
     children: [
       {
         name: 'home',
@@ -66,6 +79,25 @@ const routes: Array<RouteConfig> = [
 
 const router = new VueRouter({
   routes
+})
+
+// 全局守卫, 通过路由元信息灵活配置
+router.beforeEach((to, from, next) => {
+  // to.matched 是一个路由数组(匹配到到路由记录)
+  console.log('to==>', to)
+  console.log('from==>', from)
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // console.log(store.state.user)
+    if (!localStorageGet('user')) {
+      next({
+        name: 'login'
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 export default router
