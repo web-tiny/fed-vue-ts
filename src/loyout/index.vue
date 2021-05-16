@@ -30,6 +30,7 @@ export default Vue.extend({
 <style scoped lang="scss">
 .el-container {
   min-width: 800px;
+  height: 100vh;
 }
 .el-aside {
   background: $info-color;

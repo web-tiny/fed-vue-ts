@@ -1,16 +1,9 @@
-/*
- * @Descripttion: tiny.jiao@aliyun.com
- * @version:
- * @Author: Tiny
- * @Date: 2021-04-21 00:09:13
- * @LastEditors: Tiny
- * @LastEditTime: 2021-05-12 08:31:54
- */
+
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import layout from '@/loyout/index.vue'
-// import store from '@/store/index'
-import { localStorageGet } from '@/utils/storage/index'
+import store from '@/store/index'
+// import { localStorageGet } from '@/utils/storage/index'
 
 Vue.use(VueRouter)
 
@@ -59,6 +52,16 @@ const routes: Array<RouteConfig> = [
         component: () => import(/* webpackChunName: 'menu' */ '@/views/menu/index.vue')
       },
       {
+        name: 'menu-create',
+        path: '/menu-create',
+        component: () => import(/* webpackChunName: 'menu-create' */ '@/views/menu/create.vue')
+      },
+      {
+        name: 'menu-edit',
+        path: '/menu/:id/edit',
+        component: () => import(/* webpackChunName: 'menu-create' */ '@/views/menu/edit.vue')
+      },
+      {
         name: 'role',
         path: '/role',
         component: () => import(/* webpackChunName: 'role' */ '@/views/role/index.vue')
@@ -84,13 +87,14 @@ const router = new VueRouter({
 // 全局守卫, 通过路由元信息灵活配置
 router.beforeEach((to, from, next) => {
   // to.matched 是一个路由数组(匹配到到路由记录)
-  console.log('to==>', to)
-  console.log('from==>', from)
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    // console.log(store.state.user)
-    if (!localStorageGet('user')) {
+    if (!store.state.user) {
       next({
-        name: 'login'
+        name: 'login',
+        // 登陆后回到退出的页面
+        query: {
+          redirect: to.fullPath
+        }
       })
     } else {
       next()

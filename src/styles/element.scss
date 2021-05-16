@@ -1,0 +1,10 @@
+.el-dialog {
+  width: 600px;
+  .el-dialog__body {
+    padding: 15px;
+    .el-input,
+    .el-select {
+      width: 400px;
+    }
+  }
+}

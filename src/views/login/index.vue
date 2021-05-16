@@ -4,7 +4,7 @@
  * @Author: Tiny
  * @Date: 2021-04-29 22:12:04
  * @LastEditors: Tiny
- * @LastEditTime: 2021-05-12 08:13:52
+ * @LastEditTime: 2021-05-15 16:26:37
 -->
 <template>
   <div class="login">
@@ -72,11 +72,10 @@ export default Vue.extend({
       this.loading = true
       const { data } = await apiLogin({ ...this.ruleForm })
       this.loading = false
-      console.log(data)
       if (data.success) {
         this.$store.commit('setUser', data.content)
         this.$message.success('登陆成功')
-        this.$router.push({ name: 'home' })
+        this.$router.push(this.$route.query.redirect as string || '/')
       } else {
         this.$message.error(data.message)
       }
