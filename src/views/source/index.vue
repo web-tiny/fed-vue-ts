@@ -178,10 +178,5 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.source-list {
-  .source-form-inline {
-    display: flex;
-    justify-content: space-between;
-  }
-}
+
 </style>

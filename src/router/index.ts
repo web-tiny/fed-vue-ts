@@ -67,6 +67,12 @@ const routes: Array<RouteConfig> = [
         component: () => import(/* webpackChunName: 'role' */ '@/views/role/index.vue')
       },
       {
+        name: 'roleMenus',
+        path: '/role/:id/menus',
+        component: () => import(/* webpackChunName: 'role-menus' */ '@/views/role/menus.vue'),
+        props: true
+      },
+      {
         name: 'user',
         path: '/user',
         component: () => import(/* webpackChunName: 'user' */ '@/views/user/index.vue')
