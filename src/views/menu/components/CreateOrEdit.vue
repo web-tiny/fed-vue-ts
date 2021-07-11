@@ -83,8 +83,7 @@ export default Vue.extend({
       parentMenu: [],
       rules: {
         name: [
-          { required: true, message: '请输入菜单名', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          { required: true, message: '请输入菜单名', trigger: 'blur' }
         ],
         parentId: [
           { required: true, message: '请选择父级菜单', trigger: 'change' }
@@ -127,14 +126,15 @@ export default Vue.extend({
     },
 
     async apiUpdateMenu () {
-      const [err, { data }] = await to(createOrUpdateMenu({
-        menuForm: this.menuForm
-      }))
+      const [err, { data }] = await to(createOrUpdateMenu(this.menuForm
+      ))
       if (!err && data.code === '000000') {
         this.$message.success('提交成功')
         this.$router.push({
           name: 'menu'
         })
+      } else {
+        this.$message.warning(data.mesg)
       }
     },
 
